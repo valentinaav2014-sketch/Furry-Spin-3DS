@@ -1,28 +1,29 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <3ds.h>
+#include <stdio.h>
 
 int main(int argc, char* argv[])
 {
-	gfxInitDefault();
-	consoleInit(GFX_TOP, NULL);
+    gfxInitDefault();
+    consoleInit(GFX_BOTTOM, NULL);
 
-	printf("FURRY SPIN 3DS!!\n");
+    printf("FURRY SPIN 3DS!!\n");
+    printf("\n");
+    printf("Preparing the spin...\n");
 
-	// Main loop
-	while (aptMainLoop())
-	{
-		gspWaitForVBlank();
-		gfxSwapBuffers();
-		hidScanInput();
+    while (aptMainLoop())
+    {
+        hidScanInput();
 
-		// Your code goes here
-		u32 kDown = hidKeysDown();
-		if (kDown & KEY_START)
-			break; // break in order to return to hbmenu
-	}
+        u32 kDown = hidKeysDown();
 
-	gfxExit();
-	return 0;
+        if (kDown & KEY_START)
+            break;
+
+        gfxFlushBuffers();
+        gfxSwapBuffers();
+        gspWaitForVBlank();
+    }
+
+    gfxExit();
+    return 0;
 }
