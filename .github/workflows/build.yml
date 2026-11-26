@@ -1,1 +1,26 @@
+name: Build Furry Spin 3DS
 
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: devkitpro/devkitarm
+      options: --user 1001
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build
+        run: make -C templates/application
+
+      - name: Upload 3DSX
+        uses: actions/upload-artifact@v4
+        with:
+          name: Furry-Spin-3DS
+          path: templates/application/*.3dsx
+          if-no-files-found: error
