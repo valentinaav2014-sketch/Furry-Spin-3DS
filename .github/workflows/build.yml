@@ -1,6 +1,6 @@
 name: Build Furry Spin 3DS
 
-on:
+'on':
   push:
     branches: [master]
   workflow_dispatch:
